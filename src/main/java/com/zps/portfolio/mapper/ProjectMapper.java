@@ -1,7 +1,7 @@
 package com.zps.portfolio.mapper;
 
-import com.zps.portfolio.dto.ProjectRequest;
-import com.zps.portfolio.dto.ProjectResponse;
+import com.zps.portfolio.dto.request.ProjectRequest;
+import com.zps.portfolio.dto.response.ProjectResponse;
 import com.zps.portfolio.model.Project;
 
 public class ProjectMapper {

@@ -1,19 +1,19 @@
 package com.zps.portfolio.service;
 
-import com.zps.portfolio.model.Project;
-
-import java.util.List;
-import java.util.Optional;
+import com.zps.portfolio.dto.filter.ProjectFilter;
+import com.zps.portfolio.dto.request.ProjectRequest;
+import com.zps.portfolio.dto.response.ProjectResponse;
+import org.springframework.data.domain.Page;
 
 public interface ProjectService {
 
-    List<Project> getAllProjects();
+    Page<ProjectResponse> getAllProjects(ProjectFilter filter);
 
-    Optional<Project> getProjectById(Long id);
+    ProjectResponse getProjectById(Long id);
 
-    Project saveProject(Project project);
+    ProjectResponse saveProject(ProjectRequest request);
 
-    Project updateProject(Long id, Project project);
+    ProjectResponse updateProject(Long id, ProjectRequest request);
 
     void deleteProject(Long id);
 }

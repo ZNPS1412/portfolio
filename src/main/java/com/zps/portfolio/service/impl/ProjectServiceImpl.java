@@ -1,13 +1,20 @@
 package com.zps.portfolio.service.impl;
 
+import com.zps.portfolio.dto.filter.ProjectFilter;
+import com.zps.portfolio.dto.request.ProjectRequest;
+import com.zps.portfolio.dto.response.ProjectResponse;
 import com.zps.portfolio.exception.ResourceNotFoundException;
+import com.zps.portfolio.mapper.ProjectMapper;
 import com.zps.portfolio.model.Project;
 import com.zps.portfolio.repository.ProjectRepository;
 import com.zps.portfolio.service.ProjectService;
+import com.zps.portfolio.specification.ProjectSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -19,36 +26,65 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+    public Page<ProjectResponse> getAllProjects(ProjectFilter filter) {
+
+        Sort sort = filter.getSortDir().equalsIgnoreCase("asc")
+                ? Sort.by(filter.getSortBy()).ascending()
+                : Sort.by(filter.getSortBy()).descending();
+
+        Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize(), sort);
+
+        Specification<Project> specification =
+                Specification
+                        .where(ProjectSpecification.hasKeyword(filter.getKeyword()))
+                        .and(ProjectSpecification.hasFeatured(filter.getFeatured()));
+
+        Page<Project> projects =
+                projectRepository.findAll(specification, pageable);
+
+        return projects.map(ProjectMapper::toResponse);
     }
 
     @Override
-    public Optional<Project> getProjectById(Long id) {
-        return projectRepository.findById(id);
-    }
+    public ProjectResponse getProjectById(Long id) {
 
-    @Override
-    public Project saveProject(Project project) {
-        return projectRepository.save(project);
-    }
-
-    @Override
-    public Project updateProject(Long id, Project project) {
-
-        Project existingProject = projectRepository.findById(id)
+        Project project = projectRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Project not found with id: " + id));
+                        new ResourceNotFoundException(
+                                "Project not found with id: " + id));
 
-        existingProject.setTitle(project.getTitle());
-        existingProject.setDescription(project.getDescription());
-        existingProject.setTechnologies(project.getTechnologies());
-        existingProject.setGithubUrl(project.getGithubUrl());
-        existingProject.setLiveDemoUrl(project.getLiveDemoUrl());
-        existingProject.setImageUrl(project.getImageUrl());
-        existingProject.setFeatured(project.getFeatured());
+        return ProjectMapper.toResponse(project);
+    }
 
-        return projectRepository.save(existingProject);
+    @Override
+    public ProjectResponse saveProject(ProjectRequest request) {
+
+        Project project = ProjectMapper.toEntity(request);
+
+        Project savedProject = projectRepository.save(project);
+
+        return ProjectMapper.toResponse(savedProject);
+    }
+
+    @Override
+    public ProjectResponse updateProject(Long id, ProjectRequest request) {
+
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Project not found with id: " + id));
+
+        project.setTitle(request.getTitle());
+        project.setDescription(request.getDescription());
+        project.setTechnologies(request.getTechnologies());
+        project.setGithubUrl(request.getGithubUrl());
+        project.setLiveDemoUrl(request.getLiveDemoUrl());
+        project.setImageUrl(request.getImageUrl());
+        project.setFeatured(request.getFeatured());
+
+        Project updated = projectRepository.save(project);
+
+        return ProjectMapper.toResponse(updated);
     }
 
     @Override
