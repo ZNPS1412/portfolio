@@ -9,6 +9,8 @@ import com.zps.portfolio.model.Project;
 import com.zps.portfolio.repository.ProjectRepository;
 import com.zps.portfolio.service.ProjectService;
 import com.zps.portfolio.specification.ProjectSpecification;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
@@ -27,6 +30,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Page<ProjectResponse> getAllProjects(ProjectFilter filter) {
+
+        log.info(
+                "Retrieving projects | page={} size={} keyword={} featured={}",
+                filter.getPage(),
+                filter.getSize(),
+                filter.getKeyword(),
+                filter.getFeatured()
+        );
 
         Sort sort = filter.getSortDir().equalsIgnoreCase("asc")
                 ? Sort.by(filter.getSortBy()).ascending()
@@ -59,15 +70,21 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponse saveProject(ProjectRequest request) {
 
+        log.info("Creating project: {}", request.getTitle());
+
         Project project = ProjectMapper.toEntity(request);
 
         Project savedProject = projectRepository.save(project);
+
+        log.info("Project created successfully with ID: {}", savedProject.getId());
 
         return ProjectMapper.toResponse(savedProject);
     }
 
     @Override
     public ProjectResponse updateProject(Long id, ProjectRequest request) {
+
+        log.info("Updating project ID: {}", id);
 
         Project project = projectRepository.findById(id)
                 .orElseThrow(() ->
@@ -84,11 +101,15 @@ public class ProjectServiceImpl implements ProjectService {
 
         Project updated = projectRepository.save(project);
 
+        log.info("Project updated successfully.");
+
         return ProjectMapper.toResponse(updated);
     }
 
     @Override
     public void deleteProject(Long id) {
+        log.info("Deleting project ID: {}", id);
         projectRepository.deleteById(id);
+        log.info("Project deleted successfully.");
     }
 }

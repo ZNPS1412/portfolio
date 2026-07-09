@@ -6,6 +6,8 @@ import com.zps.portfolio.dto.response.ProjectResponse;
 import com.zps.portfolio.payload.ApiResponse;
 import com.zps.portfolio.payload.PaginationResponse;
 import com.zps.portfolio.service.ProjectService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,10 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/projects")
+@Tag(
+        name = "Projects",
+        description = "Operations related to portfolio projects."
+)
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -23,6 +29,10 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
+    @Operation(
+            summary = "Retrieve all projects",
+            description = "Returns a paginated list of portfolio projects with optional searching, filtering, and sorting."
+    )
     @GetMapping
     public ResponseEntity<ApiResponse<PaginationResponse<ProjectResponse>>> getAllProjects(
 
@@ -92,6 +102,9 @@ public class ProjectController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(
+            summary = "Create a new project"
+    )
     @PostMapping
     public ResponseEntity<ApiResponse<ProjectResponse>> createProject(
             @Valid @RequestBody ProjectRequest request) {
@@ -111,6 +124,9 @@ public class ProjectController {
                 .body(apiResponse);
     }
 
+    @Operation(
+            summary = "Update an existing project"
+    )
     @PutMapping("/{id}")
     public ProjectResponse updateProject(
             @PathVariable Long id,
@@ -119,6 +135,9 @@ public class ProjectController {
         return projectService.updateProject(id, request);
     }
 
+    @Operation(
+            summary = "Delete a project"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(
             @PathVariable Long id) {
