@@ -1,5 +1,6 @@
 package com.zps.portfolio.exception;
 
+import com.zps.portfolio.payload.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -40,6 +41,19 @@ public class GlobalExceptionHandler {
         }
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<ApiResponse<Object>> handleFileStorageException(
+            FileStorageException ex) {
+
+        return ResponseEntity.badRequest().body(
+                new ApiResponse<>(
+                        false,
+                        ex.getMessage(),
+                        null
+                )
+        );
     }
 
 }

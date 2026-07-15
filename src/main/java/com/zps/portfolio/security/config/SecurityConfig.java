@@ -54,6 +54,10 @@ public class SecurityConfig {
                                 HttpMethod.DELETE,
                                 "/api/projects/**"
                         ).hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/upload/**"
+                        ).hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
                 )
