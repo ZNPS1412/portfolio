@@ -62,6 +62,10 @@ public class SecurityConfig {
                                 HttpMethod.GET,
                                 "/api/resume/**"
                         ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/contact/**"
+                        ).permitAll()
                         .anyRequest()
                         .authenticated()
                 )
