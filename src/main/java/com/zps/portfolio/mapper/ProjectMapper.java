@@ -31,7 +31,7 @@ public class ProjectMapper {
         response.setTechnologies(project.getTechnologies());
         response.setGithubUrl(project.getGithubUrl());
         response.setLiveDemoUrl(project.getLiveDemoUrl());
-        response.setImageUrl(project.getImageUrl());
+        response.setImageUrl("http://localhost:8080/uploads/" + project.getImageUrl());
         response.setFeatured(project.getFeatured());
 
         return response;

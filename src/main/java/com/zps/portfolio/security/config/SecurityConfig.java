@@ -58,6 +58,10 @@ public class SecurityConfig {
                                 HttpMethod.POST,
                                 "/api/upload/**"
                         ).hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/resume/**"
+                        ).permitAll()
                         .anyRequest()
                         .authenticated()
                 )
