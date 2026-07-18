@@ -1,10 +1,37 @@
 services:
 
-  portfolio:
+  postgres:
+
+    image: postgres:17
+
+    container_name: portfolio-postgres
+
+    environment:
+      POSTGRES_DB: portfolio_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: zarni2001
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  app:
 
     build: .
 
-    container_name: portfolio-api
+    container_name: portfolio-app
 
     ports:
       - "8080:8080"
+
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+    depends_on:
+      - postgres
+
+volumes:
+
+  postgres-data:
