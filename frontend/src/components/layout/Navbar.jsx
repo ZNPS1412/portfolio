@@ -17,6 +17,11 @@ function Navbar() {
         },
 
         {
+            id: "skills",
+            label: "Skills",
+        },
+
+        {
             id: "projects",
             label: "Projects",
         },

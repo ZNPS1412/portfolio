@@ -1,6 +1,5 @@
 import SkillCategory from "./SkillCategory";
-import SkillBar from "./SkillBar";
-import SkillChip from "./SkillChip";
+import SectionTitle from "../common/SectionTitle";
 
 import {
     programmingLanguages,
@@ -11,92 +10,67 @@ import {
     additionalSoftware,
 } from "../data/skills";
 
-
 function Skills() {
 
     return (
-        <section id="skills" className="bg-slate-950 py-28">
+
+        <section
+            id="skills"
+            className="bg-slate-950 py-28"
+        >
 
             <div className="mx-auto max-w-7xl px-6">
 
-                <h2 className="mb-16 text-center text-5xl font-bold text-white">
-
-                    Technical Skills
-
-                </h2>
+                <SectionTitle
+                    eyebrow="TECHNICAL EXPERTISE"
+                    title="Technical Skills"
+                    subtitle="Technologies, frameworks and tools I use to design, develop and deploy modern applications."
+                />
 
                 <div className="grid gap-8 lg:grid-cols-2">
+
                     <SkillCategory
                         title="Programming Languages"
                         icon="💻"
-                    >
-                        {programmingLanguages.map((skill) => (
-                            <SkillBar
-                                key={skill.id}
-                                skill={skill}
-                            />
-                        ))}
-                    </SkillCategory>
-                </div>
-                
-                <div className="grid gap-8 lg:grid-cols-2">
-                    <SkillCategory
-                        title="Frameworks"
-                        icon="🛠️"
-                    >
-                        {frameworks.map((skill) => (
-                            <SkillBar
-                                key={skill.id}
-                                skill={skill}
-                            />
-                        ))}
-                    </SkillCategory>
-                </div>
+                        skills={programmingLanguages}
+                    />
 
-                <div className="grid gap-8 lg:grid-cols-2">
+                    <SkillCategory
+                        title="Frameworks & Libraries"
+                        icon="📦"
+                        skills={frameworks}
+                    />
+
                     <SkillCategory
                         title="Backend Technologies"
+                        icon="🛡️"
+                        skills={backendTechnologies}
+                    />
+
+                    <SkillCategory
+                        title="Databases"
                         icon="🗄️"
-                    >
-                        {backendTechnologies.map((skill) => (
-                            <SkillBar
-                                key={skill.id}
-                                skill={skill}
-                            />
-                        ))}
-                    </SkillCategory>
-                </div>
+                        skills={databases}
+                    />
 
-                <div className="flex flex-wrap gap-3">
-                    {databases.map((database) => (
-                        <SkillChip
-                            key={database.id}
-                            skill={database}
-                        />
-                    ))}
-                </div>
+                    <SkillCategory
+                        title="Development Tools"
+                        icon="🛠️"
+                        skills={developmentTools}
+                    />
 
-                <div className="flex flex-wrap gap-3">
-                    {developmentTools.map((tool) => (
-                        <SkillChip
-                            key={tool.id}
-                            skill={tool}
-                        />
-                    ))}
-                </div>  
+                    <SkillCategory
+                        title="Additional Software"
+                        icon="🎨"
+                        skills={additionalSoftware}
+                    />
 
-                <div className="flex flex-wrap gap-3">
-                    {additionalSoftware.map((software) => (
-                        <SkillChip
-                            key={software.id}
-                            skill={software}
-                        />
-                    ))}
                 </div>
 
             </div>
 
         </section>
+
     );
 
 }
