@@ -1,5 +1,7 @@
-import SkillCategory from "./SkillCategory";
+import Section from "../common/Section";
 import SectionTitle from "../common/SectionTitle";
+import SkillCategory from "./SkillCategory";
+import SkillItem from "./SkillItem";
 
 import {
     programmingLanguages,
@@ -8,68 +10,88 @@ import {
     databases,
     developmentTools,
     additionalSoftware,
-} from "../data/skills";
+} from "../../data/skills";
 
 function Skills() {
 
+    const categories = [
+
+        {
+            title: "Programming Languages",
+            icon: "💻",
+            skills: programmingLanguages,
+        },
+
+        {
+            title: "Frameworks & Libraries",
+            icon: "📦",
+            skills: frameworks,
+        },
+
+        {
+            title: "Backend Technologies",
+            icon: "🛡️",
+            skills: backendTechnologies,
+        },
+
+        {
+            title: "Databases",
+            icon: "🗄️",
+            skills: databases,
+        },
+
+        {
+            title: "Development Tools",
+            icon: "🛠️",
+            skills: developmentTools,
+        },
+
+        {
+            title: "Additional Software",
+            icon: "🎨",
+            skills: additionalSoftware,
+        },
+
+    ];
+
+    
     return (
 
-        <section
+        <Section
             id="skills"
-            className="bg-slate-950 py-28"
+            variant="dark"
+            glow="cyan"
         >
 
-            <div className="mx-auto max-w-7xl px-6">
+            <SectionTitle
+                eyebrow="TECHNICAL EXPERTISE"
+                title="Technical Skills"
+                subtitle="Technologies, frameworks and tools I use to design, develop and deploy modern applications."
+            />
 
-                <SectionTitle
-                    eyebrow="TECHNICAL EXPERTISE"
-                    title="Technical Skills"
-                    subtitle="Technologies, frameworks and tools I use to design, develop and deploy modern applications."
-                />
+            <div className="grid gap-8 lg:grid-cols-2">
 
-                <div className="grid gap-8 lg:grid-cols-2">
-
+                {categories.map((category) => (
                     <SkillCategory
-                        title="Programming Languages"
-                        icon="💻"
-                        skills={programmingLanguages}
-                    />
+                        key={category.title}
+                        title={category.title}
+                        icon={category.icon}
+                    >
 
-                    <SkillCategory
-                        title="Frameworks & Libraries"
-                        icon="📦"
-                        skills={frameworks}
-                    />
+                        {category.skills.map((skill) => (
+                            <SkillItem
+                                key={skill.id}
+                                skill={skill}
+                            />
+                        ))}
 
-                    <SkillCategory
-                        title="Backend Technologies"
-                        icon="🛡️"
-                        skills={backendTechnologies}
-                    />
+                    </SkillCategory>
 
-                    <SkillCategory
-                        title="Databases"
-                        icon="🗄️"
-                        skills={databases}
-                    />
-
-                    <SkillCategory
-                        title="Development Tools"
-                        icon="🛠️"
-                        skills={developmentTools}
-                    />
-
-                    <SkillCategory
-                        title="Additional Software"
-                        icon="🎨"
-                        skills={additionalSoftware}
-                    />
-
-                </div>
+                ))}
 
             </div>
 
-        </section>
+        </Section>
 
     );
 

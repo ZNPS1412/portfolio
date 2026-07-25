@@ -1,13 +1,16 @@
+import Section from "./common/Section";
+
 function Projects() {
     return (
-        <section
+        <Section
             id="projects"
-            className="flex min-h-screen items-center justify-center bg-slate-900"
+            variant="dark"
+            glow="emerald"
         >
             <h2 className="text-5xl font-bold text-white">
                 Projects
             </h2>
-        </section>
+        </Section>
     );
 }
 

@@ -1,4 +1,4 @@
-import { FaJava, FaMicrosoft } from "react-icons/fa6";
+import { FaJava, FaMicrosoft, FaAward } from "react-icons/fa6";
 import { VscVscode } from "react-icons/vsc";
 import { GrOracle } from "react-icons/gr";
 import { TbBrandAdobeIllustrator } from "react-icons/tb";
@@ -44,5 +44,6 @@ export const iconMap = {
     microsoft: FaMicrosoft,
     illustrator: TbBrandAdobeIllustrator,
     godot: SiGodotengine,
+    certificate: FaAward,
 };
 

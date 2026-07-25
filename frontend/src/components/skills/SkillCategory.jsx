@@ -1,33 +1,43 @@
 import Card from "../common/Card";
-import SkillItem from "./SkillItem";
 
-function SkillCategory({ title, icon, skills }) {
+function SkillCategory({
+    title,
+    subtitle,
+    icon,
+    children,
+}) {
 
     return (
 
         <Card>
 
-            <div className="mb-8 flex items-center gap-3">
+            <div className="mb-8 flex items-center gap-4">
 
-                <span className="text-2xl">
+                <div className="text-3xl">
                     {icon}
-                </span>
+                </div>
 
-                <h3 className="text-xl font-semibold text-white">
-                    {title}
-                </h3>
+                <div>
+
+                    <h3 className="text-2xl font-bold text-white">
+                        {title}
+                    </h3>
+
+                    {
+                        subtitle && (
+                            <p className="mt-1 text-sm text-slate-400">
+                                {subtitle}
+                            </p>
+
+                        )
+                    }
+
+                </div>
 
             </div>
 
-            <div className="space-y-2">
-
-                {skills.map((skill) => (
-                    <SkillItem
-                        key={skill.id}
-                        skill={skill}
-                    />
-                ))}
-
+            <div className="space-y-4">
+                {children}
             </div>
 
         </Card>

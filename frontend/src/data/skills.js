@@ -89,7 +89,7 @@ export const databases = [
         id: 12,
         name: "MySQL",
         proficiency: "Advanced",
-        color: "#4479A1",
+        color: "#F29111",
         icon: "mysql",
     },
     {
