@@ -2,18 +2,18 @@ export const education = [
 
     {
         id: 1,
-        period: "2024 – 2025",
-        icon: "🎓",
-        degree: "BSc (Hons) Computer Science",
-        institution: "University of Sunderland",
-        achievement: "First Class Honours"
+        period: "2018 – 2020",
+        icon: "📖",
+        degree: "Undergraduate Computer Science Program",
+        institution: "University of Information Technology",
+        achievement: "Completed the first 2 years of a 5-year curriculum."
     },
 
     {
         id: 2,
-        period: "2023 – 2024",
-        icon: "📘",
-        degree: "OTHM Level 5 Diploma in Information Technology",
+        period: "2022 – 2023",
+        icon: "📗",
+        degree: "OTHM Level 4 Diploma in Information Technology",
         institution: "Business Institute Yangon",
         achievement: ""
     },
@@ -29,11 +29,21 @@ export const education = [
 
     {
         id: 4,
-        period: "2022 – 2023",
-        icon: "📗",
-        degree: "OTHM Level 4 Diploma in Information Technology",
+        period: "2023 – 2024",
+        icon: "📘",
+        degree: "OTHM Level 5 Diploma in Information Technology",
         institution: "Business Institute Yangon",
         achievement: ""
+    },
+
+    
+    {
+        id: 5,
+        period: "2024 – 2025",
+        icon: "🎓",
+        degree: "BSc (Hons) Computer Science",
+        institution: "University of Sunderland",
+        achievement: "First Class Honours"
     },
 
 ];
