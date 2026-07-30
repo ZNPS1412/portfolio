@@ -5,6 +5,7 @@ import Projects from "../components/projects/Projects";
 import Contact from "../components/contact/Contact";
 import Skills from "../components/skills/Skills";
 import Education from "../components/education/Education";
+import Footer from "../components/layout/Footer";
 
 function Home() {
     return (
@@ -16,6 +17,7 @@ function Home() {
             <Education />
             <Projects />
             <Contact />
+            <Footer />
         </>
     );
 }
