@@ -1,8 +1,17 @@
-import { FaJava, FaMicrosoft, FaAward } from "react-icons/fa6";
 import { VscVscode } from "react-icons/vsc";
 import { GrOracle } from "react-icons/gr";
 import { TbBrandAdobeIllustrator } from "react-icons/tb";
 import { BsFiletypeSql } from "react-icons/bs";
+
+import { 
+    FaJava, 
+    FaMicrosoft, 
+    FaAward, 
+    FaGithub,
+    FaLinkedin,
+    FaEnvelope,
+    FaLocationDot,
+} from "react-icons/fa6";
 
 import {
     SiJavascript,
@@ -45,5 +54,9 @@ export const iconMap = {
     illustrator: TbBrandAdobeIllustrator,
     godot: SiGodotengine,
     certificate: FaAward,
+    mail: FaEnvelope,
+    githubicon: FaGithub,
+    linkedin: FaLinkedin,
+    location: FaLocationDot,
 };
 

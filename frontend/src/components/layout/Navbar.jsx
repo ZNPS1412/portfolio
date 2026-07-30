@@ -1,4 +1,4 @@
-import Logo from "../Logo";
+import Logo from "./Logo";
 import useActiveSection from "../../hooks/useActiveSection";
 import { navigation } from "../../data/navigation";
 
