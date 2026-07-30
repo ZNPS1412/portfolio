@@ -6,18 +6,36 @@ function Timeline({ items }) {
 
         <div className="relative mt-20">
 
-            {/* Vertical Line */}
+            {/* Desktop Timeline Line */}
             <div
-                className="absolute
-                left-1/2
-                top-0
-                h-full
-                w-px
-                -translate-x-1/2
-                bg-slate-700"
+                className="
+                    absolute
+                    left-1/2
+                    top-0
+                    hidden
+                    h-full
+                    w-px
+                    -translate-x-1/2
+                    bg-slate-700
+                    lg:block
+                "
             />
 
-            <div className="space-y-20">
+            {/* Mobile Timeline Line */}
+            <div
+                className="
+                    absolute
+                    left-1/2
+                    top-0
+                    h-full
+                    w-px
+                    -translate-x-1/2
+                    bg-slate-700
+                    lg:hidden
+                "
+            />
+
+            <div className="space-y-12 lg:space-y-20">
 
                 {items.map((item, index) => (
 

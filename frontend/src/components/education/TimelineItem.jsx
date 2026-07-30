@@ -10,20 +10,22 @@ function TimelineItem({ item, index }) {
             }`}
         >
 
-            {/* Timeline Dot */}
+            {/* Desktop Dot */}
             <div
                 className="
-                absolute
-                left-1/2
-                z-20
-                h-6
-                w-6
-                -translate-x-1/2
-                rounded-full
-                border-4
-                border-slate-900
-                bg-cyan-400
-                shadow-[0_0_20px_rgba(34,211,238,.8)]
+                    absolute
+                    left-1/2
+                    z-20
+                    hidden
+                    h-6
+                    w-6
+                    -translate-x-1/2
+                    rounded-full
+                    border-4
+                    border-slate-900
+                    bg-cyan-400
+                    shadow-[0_0_20px_rgba(34,211,238,.8)]
+                    lg:block
                 "
             />
 

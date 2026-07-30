@@ -9,25 +9,33 @@ function CertificateCard({ certificate }) {
 
         <Card className="group">
 
-            <div
-                className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl text-4xl"
-                style={{
-                    backgroundColor: `${certificate.color}20`,
-                    color: certificate.color,
-                }}
-            >
-                <Icon />
+            <div className="flex items-start gap-4">
+
+                <div
+                    className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-4xl"
+                    style={{
+                        backgroundColor: `${certificate.color}20`,
+                        color: certificate.color,
+                    }}
+                >
+                    <Icon />
+                </div>
+
+                <div>
+
+                    <h4 className="text-xl font-bold text-white">
+                        {certificate.title}
+                    </h4>
+
+                    <p className="mt-1 text-sm leading-relaxed text-slate-400">
+                        {certificate.subtitle}
+                    </p>
+
+                </div>
+
             </div>
 
-            <h4 className="text-xl font-bold text-white">
-                {certificate.title}
-            </h4>
-
-            <p className="mt-3 text-sm leading-relaxed text-slate-400">
-                {certificate.subtitle}
-            </p>
-
-            <div className="mt-6">
+            <div className="mt-5">
 
                 <span
                     className="rounded-full px-4 py-2 text-sm font-medium"

@@ -52,17 +52,27 @@ function Education() {
 
             <div className="mt-24">
 
-                <SectionTitle
-                    eyebrow="CONTINUOUS LEARNING"
-                    title="Current Tech Stack"
-                    subtitle="Technologies I am actively mastering and applying to build modern applications."
-                />
+            <div className="mb-12 text-center">
 
-                <TechnologyGrid
-                    technologies={currentTechnologies}
-                />
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.4em] text-cyan-400">
+                    CONTINUOUS LEARNING
+                </p>
+
+                <h3 className="text-3xl font-bold text-white md:text-4xl">
+                    Current Tech Stack
+                </h3>
+
+                <p className="mx-auto mt-4 max-w-2xl text-slate-400">
+                    Technologies I am actively mastering and applying to build modern applications.
+                </p>
 
             </div>
+
+            <TechnologyGrid
+                technologies={currentTechnologies}
+            />
+
+        </div>
 
         </Section>
 

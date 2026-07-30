@@ -44,39 +44,43 @@ function Hero() {
 
                 <div className="mt-12 flex justify-center gap-6">
 
-                    <button
+                    <a
+                        href="#projects"
                         className="
-                        rounded-xl
-                        bg-blue-600
-                        px-8
-                        py-4
-                        font-semibold
-                        text-white
-                        transition-all
-                        duration-300
-                        hover:scale-105
-                        hover:-translate-y-1
-                        hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]
-                        active:scale-95
-                        ">
-                        🚀 View Projects
-                    </button>
+                            rounded-xl
+                            bg-blue-600
+                            px-8
+                            py-4
+                            font-semibold
+                            text-white
+                            transition-all
+                            duration-300
+                            hover:scale-105
+                            hover:-translate-y-1
+                            hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]
+                            active:scale-95
+                        "
+                    >
+                        View Projects
+                    </a>
 
-                    <button
+                    <a
+                        href="#contact"
                         className="
-                        rounded-xl
-                        border
-                        border-slate-600
-                        px-8
-                        py-4
-                        text-white
-                        transition-all
-                        duration-300
-                        hover:border-blue-400
-                        hover:bg-slate-900
-                    ">
-                        📧 Contact Me
-                    </button>
+                            rounded-xl
+                            border
+                            border-slate-600
+                            px-8
+                            py-4
+                            text-white
+                            transition-all
+                            duration-300
+                            hover:border-blue-400
+                            hover:bg-slate-900
+                        "
+                    >
+                        Contact Me
+                    </a>
 
                 </div>
 

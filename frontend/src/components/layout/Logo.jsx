@@ -23,7 +23,7 @@ function Logo() {
                 </h1>
 
                 <p className="text-xs text-slate-400">
-                    Software Engineer
+                    Software Developer
                 </p>
 
             </div>

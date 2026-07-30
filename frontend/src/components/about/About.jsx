@@ -1,4 +1,5 @@
 import Section from "../common/Section";
+import profileImage from "../../assets/profile/profile.png";
 
 function About() {
 
@@ -26,21 +27,37 @@ function About() {
 
                     <div
                         className="
-                            flex
-                            h-80
-                            w-80
-                            items-center
-                            justify-center
                             rounded-full
-                            border
-                            border-blue-500/30
-                            bg-linear-to-br
-                            from-slate-800
-                            to-slate-900
-                            text-8xl
+                            bg-gradient-to-br
+                            from-cyan-500
+                            via-blue-500
+                            to-violet-500
+                            p-1
                         "
                     >
-                        👨‍💻
+
+                        <div
+                            className="
+                                h-80
+                                w-80
+                                overflow-hidden
+                                rounded-full
+                                bg-slate-900
+                            "
+                        >
+
+                            <img
+                                src={profileImage}
+                                alt="Zarni Paing Sett"
+                                className="
+                                    h-full
+                                    w-full
+                                    object-cover
+                                "
+                            />
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -53,7 +70,7 @@ function About() {
                     </p>
 
                     <h2 className="mt-3 text-5xl font-bold">
-                        Full-Stack Java Developer
+                        Software Developer
                     </h2>
 
                     <p className="mt-8 text-lg leading-8 text-slate-400">
