@@ -1,5 +1,6 @@
 import TypingText from "./TypingText";
 import TechBadge from "./TechBadge";
+import Reveal from "../common/Reveal";
 
 function Hero() {
     
@@ -23,6 +24,8 @@ function Hero() {
                     blur-3xl
                 "
             />
+
+            <Reveal>
 
             <div className="relative z-10 text-center">
 
@@ -95,8 +98,10 @@ function Hero() {
                     <TechBadge name="Git" animation="float" />
 
                 </div>
-
+            
             </div>
+
+            </Reveal>
 
         </section>
     );

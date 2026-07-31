@@ -38,13 +38,37 @@ function Navbar() {
                             <a
                                 key={link.id}
                                 href={`#${link.id}`}
-                                className={
-                                    activeSection === link.id
-                                        ? "text-blue-400 font-semibold"
-                                        : "text-slate-300 hover:text-blue-400"
-                                }
+                                className={`
+                                    relative
+                                    pb-1
+                                    transition-colors
+
+                                    ${
+                                        activeSection === link.id
+                                            ? "font-semibold text-blue-400"
+                                            : "text-slate-300 hover:text-blue-400"
+                                    }
+                                `}
                             >
                                 {link.label}
+
+                                <span
+                                    className={`
+                                        absolute
+                                        bottom-0
+                                        left-0
+                                        h-0.5
+                                        bg-blue-400
+                                        transition-all
+                                        duration-300
+
+                                        ${
+                                            activeSection === link.id
+                                                ? "w-full"
+                                                : "w-0"
+                                        }
+                                    `}
+                                />
                             </a>
 
                         ))

@@ -1,4 +1,5 @@
 import TimelineItem from "./TimelineItem";
+import Reveal from "../common/Reveal";
 
 function Timeline({ items }) {
 
@@ -38,13 +39,14 @@ function Timeline({ items }) {
             <div className="space-y-12 lg:space-y-20">
 
                 {items.map((item, index) => (
-
+                    
+                    <Reveal key={item.id}>
                     <TimelineItem
                         key={item.id}
                         item={item}
                         index={index}
                     />
-                    
+                    </Reveal>
                 ))}
 
             </div>

@@ -1,5 +1,6 @@
 import Section from "../common/Section";
 import profileImage from "../../assets/profile/profile.png";
+import Reveal from "../common/Reveal";
 
 function About() {
 
@@ -25,10 +26,12 @@ function About() {
                 {/* Left */}
                 <div className="flex items-center justify-center">
 
+                <Reveal>
+
                     <div
                         className="
                             rounded-full
-                            bg-gradient-to-br
+                            bg-linear-to-br
                             from-cyan-500
                             via-blue-500
                             to-violet-500
@@ -59,20 +62,27 @@ function About() {
                         </div>
 
                     </div>
+                    
+                </Reveal>
 
                 </div>
 
                 {/* Right */}
                 <div>
 
+                    <Reveal>
                     <p className="font-semibold uppercase tracking-widest text-blue-400">
                         About Me
                     </p>
+                    </Reveal>
 
+                    <Reveal>
                     <h2 className="mt-3 text-5xl font-bold">
                         Software Developer
                     </h2>
+                    </Reveal>
 
+                    <Reveal>
                     <p className="mt-8 text-lg leading-8 text-slate-400">
 
                         I enjoy building secure, scalable, and modern web
@@ -80,7 +90,9 @@ function About() {
                         PostgreSQL, Docker, and REST APIs.
 
                     </p>
+                    </Reveal>
 
+                    <Reveal>
                     <p className="mt-6 text-lg leading-8 text-slate-400">
 
                         I graduated with First Class Honours in Computer
@@ -88,7 +100,9 @@ function About() {
                         practical projects.
 
                     </p>
+                    </Reveal>
 
+                    <Reveal>
                     <div className="mt-10 flex flex-wrap gap-4">
 
                         {technologies.map((technology) => (
@@ -111,7 +125,9 @@ function About() {
                         ))}
 
                     </div>
+                    </Reveal>
 
+                    <Reveal>
                     <div className="mt-14 grid grid-cols-2 gap-8">
 
                         <div>
@@ -135,6 +151,7 @@ function About() {
                         </div>
 
                     </div>
+                    </Reveal>
 
                 </div>
 

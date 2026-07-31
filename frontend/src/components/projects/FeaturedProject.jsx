@@ -4,6 +4,7 @@ import Card from "../common/Card";
 import ProjectImage from "./ProjectImage";
 import ProjectBadges from "./ProjectBadges";
 import ProjectLinks from "./ProjectLinks";
+import Reveal from "../common/Reveal";
 
 function FeaturedProject({ project }) {
 
@@ -13,12 +14,15 @@ function FeaturedProject({ project }) {
 
             <div className="grid gap-12 lg:grid-cols-2">
 
+                <Reveal>
                 <ProjectImage
                     project={project}
                 />
+                </Reveal>
 
                 <div className="flex flex-col justify-center p-10">
 
+                    <Reveal>
                     <span
                         className="
                             inline-flex
@@ -39,7 +43,9 @@ function FeaturedProject({ project }) {
                     >
                         ✦ Featured Project
                     </span>
+                    </Reveal>
 
+                    <Reveal>
                     <h3
                         className="
                             mt-6
@@ -50,7 +56,9 @@ function FeaturedProject({ project }) {
                     >
                         {project.title}
                     </h3>
+                    </Reveal>
 
+                    <Reveal>
                     <p
                         className="
                             mt-6
@@ -60,11 +68,12 @@ function FeaturedProject({ project }) {
                     >
                         {project.description}
                     </p>
+                    </Reveal>
 
                     <div className="mt-8 space-y-4">
 
                         {project.highlights.map((highlight) => (
-
+                            <Reveal key={highlight}>
                             <div
                                 key={highlight}
                                 className="
@@ -82,6 +91,7 @@ function FeaturedProject({ project }) {
                                 {highlight}
 
                             </div>
+                            </Reveal>
 
                         ))}
 

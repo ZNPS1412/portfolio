@@ -4,12 +4,15 @@ import {
     FaBookOpen,
 } from "react-icons/fa6";
 
+import Reveal from "../common/Reveal";
+
 function ProjectLinks({ project }) {
 
     return (
 
         <div className="mt-8 flex flex-wrap gap-4">
 
+            <Reveal>
             {project.github && (
                 <a
                     href={project.github}
@@ -22,7 +25,9 @@ function ProjectLinks({ project }) {
                     GitHub
                 </a>
             )}
+            </Reveal>
 
+            <Reveal>
             {project.liveDemo && (
                 <a
                     href={project.liveDemo}
@@ -35,7 +40,9 @@ function ProjectLinks({ project }) {
                     Live Demo
                 </a>
             )}
+            </Reveal>
 
+            <Reveal>
             {project.apiDocs && (
                 <a
                     href={project.apiDocs}
@@ -48,6 +55,7 @@ function ProjectLinks({ project }) {
                     API Docs
                 </a>
             )}
+            </Reveal>
 
         </div>
 

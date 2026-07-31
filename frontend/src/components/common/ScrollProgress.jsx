@@ -36,7 +36,7 @@ function ScrollProgress() {
                 fixed
                 left-0
                 top-0
-                z-[9999]
+                z-9999
                 h-1
                 bg-cyan-400
             "

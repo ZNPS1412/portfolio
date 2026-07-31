@@ -2,6 +2,7 @@ import Section from "../common/Section";
 import SectionTitle from "../common/SectionTitle";
 import SkillCategory from "./SkillCategory";
 import SkillItem from "./SkillItem";
+import Reveal from "../common/Reveal";
 
 import {
     programmingLanguages,
@@ -63,15 +64,18 @@ function Skills() {
             glow="cyan"
         >
 
+            <Reveal>
             <SectionTitle
                 eyebrow="TECHNICAL EXPERTISE"
                 title="Technical Skills"
                 subtitle="Technologies, frameworks and tools I use to design, develop and deploy modern applications."
             />
+            </Reveal>
 
             <div className="grid gap-8 lg:grid-cols-2">
 
                 {categories.map((category) => (
+                    <Reveal key={category.title}>
                     <SkillCategory
                         key={category.title}
                         title={category.title}
@@ -86,7 +90,7 @@ function Skills() {
                         ))}
 
                     </SkillCategory>
-
+                    </Reveal>
                 ))}
 
             </div>

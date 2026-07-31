@@ -3,6 +3,7 @@ import SectionTitle from "../common/SectionTitle";
 import Timeline from "./Timeline";
 import CertificateCard from "./CertificateCard";
 import TechnologyGrid from "./TechnologyGrid";
+import Reveal from "../common/Reveal";
 
 import {
     education,
@@ -20,11 +21,13 @@ function Education() {
             glow="blue"
         >
 
+            <Reveal>
             <SectionTitle
                 eyebrow="ACADEMIC JOURNEY"
                 title="Education & Certifications"
                 subtitle="Academic achievements, professional certifications, and continuous learning that have shaped my journey"
             />
+            </Reveal>
 
             <Timeline
                 items={education}
@@ -32,18 +35,21 @@ function Education() {
 
             <div className="mt-24">
 
+                <Reveal>
                 <h3 className="mb-8 text-center text-2xl font-semibold text-white">
                     Professional Certifications
                 </h3>
-
+                </Reveal>
                 
                 <div className="grid gap-6 md:grid-cols-3">
 
                     {certifications.map((certificate) => (
+                        <Reveal key={certificate.id}>
                         <CertificateCard
                             key={certificate.id}
                             certificate={certificate}
                         />
+                        </Reveal>
                     ))}
 
                 </div>
@@ -52,6 +58,7 @@ function Education() {
 
             <div className="mt-24">
 
+            <Reveal>
             <div className="mb-12 text-center">
 
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.4em] text-cyan-400">
@@ -67,6 +74,7 @@ function Education() {
                 </p>
 
             </div>
+            </Reveal>
 
             <TechnologyGrid
                 technologies={currentTechnologies}

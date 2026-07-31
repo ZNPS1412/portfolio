@@ -1,3 +1,5 @@
+import Reveal from "../common/Reveal";
+
 function ProjectBadges({ technologies }) {
 
     return (
@@ -5,7 +7,7 @@ function ProjectBadges({ technologies }) {
         <div className="mt-8 flex flex-wrap gap-3">
 
             {technologies.map((technology) => (
-
+                <Reveal key={technology}>
                 <span
                     key={technology}
                     className="
@@ -22,7 +24,7 @@ function ProjectBadges({ technologies }) {
                 >
                     {technology}
                 </span>
-
+                </Reveal>
             ))}
 
         </div>

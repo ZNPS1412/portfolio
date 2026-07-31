@@ -2,6 +2,7 @@ import Card from "../common/Card";
 import ProjectWindow from "./ProjectWindow";
 import ProjectBadges from "./ProjectBadges";
 import ProjectLinks from "./ProjectLinks";
+import Reveal from "../common/Reveal";
 
 function ProjectCard({ project }) {
 
@@ -9,6 +10,7 @@ function ProjectCard({ project }) {
 
         <Card className="group overflow-hidden p-0">
 
+            <Reveal>
             <ProjectWindow>
 
                 <img
@@ -25,16 +27,21 @@ function ProjectCard({ project }) {
                 />
 
             </ProjectWindow>
+            </Reveal>
 
             <div className="p-6">
 
+                <Reveal>
                 <h3 className="text-2xl font-bold text-white">
                     {project.title}
                 </h3>
+                </Reveal>
 
+                <Reveal>
                 <p className=" mt-4 text-slate-400 leading-7">
                     {project.description}
                 </p>
+                </Reveal>
 
                 <ProjectBadges
                     technologies={project.technologies}
