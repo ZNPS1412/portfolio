@@ -1,3 +1,5 @@
+import ProjectForm from "../components/admin/ProjectForm";
+
 function Admin() {
 
     return (
@@ -26,6 +28,8 @@ function Admin() {
                 <p className="mt-2 text-slate-400">
                     Manage portfolio projects.
                 </p>
+
+                <ProjectForm />
 
             </div>
 
