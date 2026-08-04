@@ -65,6 +65,8 @@ function LoginForm() {
                 <input
                     type="text"
                     placeholder="Username"
+                    id="username"
+                    autoComplete="off"
                     value={username}
                     onChange={(e) =>
                         setUsername(
@@ -83,6 +85,8 @@ function LoginForm() {
                 <input
                     type="password"
                     placeholder="Password"
+                    id="password"
+                    autoComplete="off"
                     value={password}
                     onChange={(e) =>
                         setPassword(
