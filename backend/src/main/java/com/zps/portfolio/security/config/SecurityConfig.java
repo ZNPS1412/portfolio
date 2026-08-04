@@ -43,7 +43,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/api/auth/**"
+                                "/api/auth/**",
+                                "/uploads/**"
                         ).permitAll()
                         .requestMatchers(
                                 HttpMethod.GET,

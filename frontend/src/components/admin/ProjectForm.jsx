@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { createProject, updateProject } from "../../services/projectService";
+import { uploadImage } from "../../services/uploadService";
 
 function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
-    const [formData, setFormData] = useState({
-
+    const INITIAL_FORM_STATE = {
         title: "",
         description: "",
         technologies: "",
@@ -12,12 +12,17 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
         liveDemoUrl: "",
         imageUrl: "",
         featured: false,
+    };
 
-    });
+    const [formData, setFormData] = useState(INITIAL_FORM_STATE);
 
     const [success, setSuccess] = useState("");
 
     const [error, setError] = useState("");
+
+    const [uploading, setUploading] = useState(false);
+
+    const [selectedFileName, setSelectedFileName] = useState("");
 
     const handleChange = (e) => {
 
@@ -59,17 +64,7 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
             }
 
-            setFormData({
-
-                title: "",
-                description: "",
-                technologies: "",
-                githubUrl: "",
-                liveDemoUrl: "",
-                imageUrl: "",
-                featured: false,
-
-            });
+            setFormData(INITIAL_FORM_STATE);
 
             onProjectCreated?.();
 
@@ -103,7 +98,7 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
             liveDemoUrl: editingProject.liveDemoUrl || "",
 
-            imageUrl: editingProject.imageUrl || "",
+            imageUrl: editingProject.imageUrl?.replace("http://localhost:8080/uploads/", "") || "",
 
             featured: editingProject.featured || false,
 
@@ -113,22 +108,46 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
     const resetForm = () => {
 
-        setFormData({
-
-            title: "",
-            description: "",
-            technologies: "",
-            githubUrl: "",
-            liveDemoUrl: "",
-            imageUrl: "",
-            featured: false,
-
-        });
-
+        setFormData(INITIAL_FORM_STATE);
+        setSelectedFileName("");
         setSuccess("");
         setError("");
-
         setEditingProject(null);
+
+    };
+
+    const handleImageUpload = async (e) => {
+
+        const file = e.target.files[0];
+
+        setSelectedFileName(file.name);
+
+        if (!file) {
+            return;
+        }
+
+        try {
+
+            setUploading(true);
+
+            const response = await uploadImage(file);
+
+            const filename = response.data.data;
+
+            setFormData((prev) => ({
+                ...prev,
+                imageUrl: filename
+            }));
+
+        } catch (error) {
+
+            console.error(error);
+
+        } finally {
+
+            setUploading(false);
+
+        }
 
     };
 
@@ -148,7 +167,11 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
         >
 
             <h2 className="mb-6 text-2xl font-bold">
-                Create Project
+                {
+                    editingProject
+                        ? "Edit Project"
+                        : "Create Project"
+                }
             </h2>
 
             <div className="grid gap-4">
@@ -197,13 +220,124 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                     className="rounded-lg bg-slate-900 p-3"
                 />
 
-                <input
-                    name="imageUrl"
-                    value={formData.imageUrl}
-                    onChange={handleChange}
-                    placeholder="Image URL"
-                    className="rounded-lg bg-slate-900 p-3"
-                />
+                <div>
+
+                    <label
+                        htmlFor="project-image"
+                        className="
+                            mb-2
+                            block
+                            text-sm
+                            font-medium
+                            text-slate-400
+                        "
+                    >
+                        Project Image
+                    </label>
+
+                    <input
+                        id="project-image"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                    />
+
+                    <label
+                        htmlFor="project-image"
+                        className="
+                            flex
+                            cursor-pointer
+                            items-center
+                            justify-center
+                            rounded-lg
+                            border
+                            border-slate-700
+                            bg-slate-900
+                            px-4
+                            py-3
+                            text-slate-300
+                            transition-all
+
+                            hover:border-cyan-400
+                            hover:text-white
+                        "
+                    >
+                        {
+                            uploading
+                                ? "Uploading..."
+                                : "Choose Image"
+                        }
+                    </label>
+
+                    {
+                        selectedFileName && (
+                            <p
+                                className="
+                                    mt-2
+                                    text-sm
+                                    text-slate-400
+                                "
+                            >
+                                Selected:
+                                {" "}
+                                {selectedFileName}
+                            </p>
+                        )
+                    }
+
+                    {
+                        formData.imageUrl && (
+
+                            <div
+                                className="
+                                    mt-4
+                                    overflow-hidden
+                                    rounded-xl
+                                    border
+                                    border-slate-800
+                                    bg-slate-900
+                                "
+                            >
+
+                                <img
+                                    src={
+                                        formData.imageUrl
+                                            ? `http://localhost:8080/uploads/${formData.imageUrl}`
+                                            : ""
+                                    }
+                                    alt="Project Preview"
+                                    className="
+                                        h-48
+                                        w-full
+                                        object-cover
+                                    "
+                                />
+
+                                <div
+                                    className="
+                                        border-t
+                                        border-slate-800
+                                        px-4
+                                        py-3
+                                    "
+                                >
+                                    <p
+                                        className="
+                                            text-sm
+                                            text-green-400
+                                        "
+                                    >
+                                        ✓ Image uploaded successfully
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        )
+                    }
+
+                </div>
 
                 <label className="flex items-center gap-3">
 
@@ -243,15 +377,18 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                             flex-1
                             rounded-lg
                             border
-                            border-slate-700
+                            border-slate-800
+                            bg-slate-900
                             py-3
-                            font-semibold
-                            text-slate-300
-                            transition
-                            hover:bg-slate-800
+                            font-medium
+                            text-slate-400
+                            transition-all
+
+                            hover:border-slate-600
+                            hover:text-white
                         "
                     >
-                        Clear Form
+                        Cancel
                     </button>
 
                     <button
@@ -263,6 +400,9 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                             py-3
                             font-semibold
                             text-slate-950
+                            transition-all
+
+                            hover:bg-cyan-400
                         "
                     >
                         {
