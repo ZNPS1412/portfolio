@@ -9,6 +9,7 @@ import com.zps.portfolio.model.Project;
 import com.zps.portfolio.repository.ProjectRepository;
 import com.zps.portfolio.service.ProjectService;
 import com.zps.portfolio.specification.ProjectSpecification;
+import com.zps.portfolio.service.FileStorageService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,9 +24,11 @@ import org.springframework.stereotype.Service;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final FileStorageService fileStorageService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, FileStorageService fileStorageService) {
         this.projectRepository = projectRepository;
+        this.fileStorageService = fileStorageService;
     }
 
     @Override
@@ -96,7 +99,12 @@ public class ProjectServiceImpl implements ProjectService {
         project.setTechnologies(request.getTechnologies());
         project.setGithubUrl(request.getGithubUrl());
         project.setLiveDemoUrl(request.getLiveDemoUrl());
+
+        if (project.getImageUrl() != null && !project.getImageUrl().equals(request.getImageUrl())) {
+            fileStorageService.deleteFile(project.getImageUrl());
+        }
         project.setImageUrl(request.getImageUrl());
+
         project.setFeatured(request.getFeatured());
 
         Project updated = projectRepository.save(project);
@@ -108,8 +116,22 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteProject(Long id) {
+
         log.info("Deleting project ID: {}", id);
-        projectRepository.deleteById(id);
+
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Project not found with id: " + id));
+
+        if (project.getImageUrl() != null && !project.getImageUrl().isBlank()) {
+            fileStorageService.deleteFile(project.getImageUrl());
+        }
+
+        projectRepository.delete(project);
+
         log.info("Project deleted successfully.");
+
     }
+
 }

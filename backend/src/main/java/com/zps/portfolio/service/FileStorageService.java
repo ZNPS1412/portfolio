@@ -6,4 +6,6 @@ public interface FileStorageService {
 
     String uploadFile(MultipartFile file);
 
+    void deleteFile(String filename);
+
 }
