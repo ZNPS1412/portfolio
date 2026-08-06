@@ -17,7 +17,7 @@ public class UploadController {
     @PostMapping
     public ResponseEntity<ApiResponse<String>> uploadImage(@RequestParam("file") MultipartFile file) {
 
-        String filename = fileStorageService.uploadFile(file);
+        String filename = fileStorageService.uploadImage(file);
 
         return ResponseEntity.ok(
                 new ApiResponse<>(

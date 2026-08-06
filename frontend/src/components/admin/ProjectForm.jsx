@@ -24,6 +24,10 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
     const [selectedFileName, setSelectedFileName] = useState("");
 
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const [imagePreview, setImagePreview] = useState("");
+
     const handleChange = (e) => {
 
         const { name, value, type, checked } = e.target;
@@ -50,21 +54,46 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
             setError("");
             setSuccess("");
 
+            let imageUrl = formData.imageUrl;
+
+            if (selectedImage) {
+
+                setUploading(true);
+
+                const uploadResponse = await uploadImage(selectedImage);
+
+                imageUrl = uploadResponse.data.data;
+
+                setUploading(false);
+
+            }
+
+            const payload = {
+                ...formData,
+                imageUrl
+            };
+
             if (editingProject) {
 
-                await updateProject(editingProject.id, formData);
+                await updateProject(editingProject.id, payload);
 
                 setSuccess("Project updated successfully.");
 
             } else {
 
-                await createProject(formData);
+                await createProject(payload);
 
                 setSuccess("Project created successfully.");
 
             }
 
             setFormData(INITIAL_FORM_STATE);
+
+            setSelectedImage(null);
+
+            setSelectedFileName("");
+
+            setImagePreview("");
 
             onProjectCreated?.();
 
@@ -109,45 +138,28 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
     const resetForm = () => {
 
         setFormData(INITIAL_FORM_STATE);
+        setSelectedImage(null);
         setSelectedFileName("");
+        setImagePreview("");
         setSuccess("");
         setError("");
         setEditingProject(null);
 
     };
 
-    const handleImageUpload = async (e) => {
+    const handleImageUpload = (e) => {
 
         const file = e.target.files[0];
-
-        setSelectedFileName(file.name);
 
         if (!file) {
             return;
         }
 
-        try {
+        setSelectedImage(file);
 
-            setUploading(true);
+        setSelectedFileName(file.name);
 
-            const response = await uploadImage(file);
-
-            const filename = response.data.data;
-
-            setFormData((prev) => ({
-                ...prev,
-                imageUrl: filename
-            }));
-
-        } catch (error) {
-
-            console.error(error);
-
-        } finally {
-
-            setUploading(false);
-
-        }
+        setImagePreview(URL.createObjectURL(file));
 
     };
 
@@ -287,7 +299,7 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                     }
 
                     {
-                        formData.imageUrl && (
+                        (imagePreview || formData.imageUrl) && (
 
                             <div
                                 className="
@@ -302,9 +314,9 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
                                 <img
                                     src={
-                                        formData.imageUrl
-                                            ? `http://localhost:8080/uploads/${formData.imageUrl}`
-                                            : ""
+                                        imagePreview
+                                            ? imagePreview
+                                            : `http://localhost:8080/uploads/${formData.imageUrl}`
                                     }
                                     alt="Project Preview"
                                     className="
@@ -322,14 +334,16 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                                         py-3
                                     "
                                 >
+
                                     <p
                                         className="
                                             text-sm
                                             text-green-400
                                         "
                                     >
-                                        ✓ Image uploaded successfully
+                                        ✓ Image ready
                                     </p>
+
                                 </div>
 
                             </div>
