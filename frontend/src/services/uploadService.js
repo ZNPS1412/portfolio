@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./api";
 
 const API_URL = "http://localhost:8080/api/upload";
 
@@ -17,6 +17,6 @@ export const uploadImage = (file) => {
 
     formData.append("file", file);
 
-    return axios.post(API_URL, formData, getAuthHeader());
+    return api.post(API_URL, formData, getAuthHeader());
 
 };

@@ -1,19 +1,19 @@
-import axios from "axios";
+import api from "./api";
 
 const API_URL = "http://localhost:8080/api/projects";
 
 const getAuthHeader = () => ({
 
     headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
 
 });
 
-export const getProjects = () => axios.get(API_URL);
+export const getProjects = () => api.get(API_URL);
 
-export const createProject = (project) => axios.post(API_URL, project, getAuthHeader());
+export const createProject = (project) => api.post(API_URL, project, getAuthHeader());
 
-export const deleteProject = (id) => axios.delete(`${API_URL}/${id}`, getAuthHeader());
+export const deleteProject = (id) => api.delete(`${API_URL}/${id}`, getAuthHeader());
 
-export const updateProject = (id, project) => axios.put( `${API_URL}/${id}`, project, getAuthHeader());
+export const updateProject = (id, project) => api.put( `${API_URL}/${id}`, project, getAuthHeader());

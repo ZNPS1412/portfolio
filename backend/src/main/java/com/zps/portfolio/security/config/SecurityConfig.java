@@ -72,6 +72,10 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(
                                 HttpMethod.POST,
+                                "/api/resume/**"
+                        ).hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.POST,
                                 "/api/contact/**"
                         ).permitAll()
                         .anyRequest()

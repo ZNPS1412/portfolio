@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -21,7 +22,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     private String uploadDir;
 
     @Override
-    public String uploadFile(MultipartFile file) {
+    public String uploadImage(MultipartFile file) {
 
         if (file.isEmpty()) {
             throw new FileStorageException("Please select an image.");
@@ -43,15 +44,42 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new FileStorageException("Image size cannot exceed 5 MB.");
         }
 
+        return saveFile(file);
+
+    }
+
+    @Override
+    public String uploadResume(MultipartFile file) {
+
+        if (file.isEmpty()) {
+
+            throw new FileStorageException("Please select a PDF.");
+        }
+
+        String contentType = file.getContentType();
+
+        if (contentType == null || !contentType.equals("application/pdf")) {
+
+            throw new FileStorageException("Only PDF files are allowed.");
+        }
+
+        return saveFile(file);
+
+    }
+
+    private String saveFile(MultipartFile file) {
+
         try {
 
             Path uploadPath = Paths.get(uploadDir);
 
             if (!Files.exists(uploadPath)) {
+
                 Files.createDirectories(uploadPath);
+
             }
 
-            String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
+            String originalFilename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
             String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
 

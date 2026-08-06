@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { getProjects } from "../services/projectService";
 import ProjectForm from "../components/admin/ProjectForm";
 import ProjectTable from "../components/admin/ProjectTable";
-import { getProjects } from "../services/projectService";
+import ResumeManager from "../components/admin/ResumeManager";
 
 function Admin() {
 
@@ -69,6 +70,8 @@ function Admin() {
                     onProjectDeleted={loadProjects}
                     onEdit={setEditingProject}
                 />
+
+                <ResumeManager />
 
             </div>
 
