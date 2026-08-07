@@ -1,17 +1,9 @@
 import Section from "../common/Section";
 import profileImage from "../../assets/profile/profile.png";
 import Reveal from "../common/Reveal";
+import { downloadResume } from "../../services/resumeService";
 
 function About() {
-
-    const technologies = [
-        "Java",
-        "Spring Boot",
-        "React",
-        "PostgreSQL",
-        "Docker",
-        "JWT Security",
-    ];
 
     return (
         
@@ -103,32 +95,7 @@ function About() {
                     </Reveal>
 
                     <Reveal>
-                    <div className="mt-10 flex flex-wrap gap-4">
-
-                        {technologies.map((technology) => (
-
-                            <span
-                                key={technology}
-                                className="
-                                    rounded-full
-                                    bg-blue-600
-                                    px-4
-                                    py-2
-                                    font-medium
-                                    transition
-                                    hover:bg-blue-500
-                                "
-                            >
-                                {technology}
-                            </span>
-
-                        ))}
-
-                    </div>
-                    </Reveal>
-
-                    <Reveal>
-                    <div className="mt-14 grid grid-cols-2 gap-8">
+                    <div className="mt-10 grid grid-cols-2 gap-8">
 
                         <div>
                             <h3 className="text-4xl font-bold text-blue-400">
@@ -149,6 +116,54 @@ function About() {
                                 Years Learning
                             </p>
                         </div>
+
+                    </div>
+                    </Reveal>
+
+                    <Reveal>
+                    <div className="mt-14 flex flex-wrap gap-4">
+
+                        <a
+                            href={downloadResume("EN")}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="
+                                rounded-full
+                                bg-cyan-500
+                                px-5
+                                py-3
+                                font-medium
+                                text-slate-950
+                                transition-all
+
+                                hover:bg-cyan-400
+                                hover:scale-105
+                            "
+                        >
+                            📄 EN | English Resume
+                        </a>
+
+                        <a
+                            href={downloadResume("JP")}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="
+                                rounded-full
+                                border
+                                border-cyan-500
+                                px-5
+                                py-3
+                                font-medium
+                                text-cyan-400
+                                transition-all
+
+                                hover:bg-cyan-500
+                                hover:text-slate-950
+                                hover:scale-105
+                            "
+                        >
+                            📄 JP | Japanese Resume
+                        </a>
 
                     </div>
                     </Reveal>

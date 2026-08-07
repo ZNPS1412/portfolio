@@ -23,3 +23,5 @@ export const uploadResume = (language, file) => {
 };
 
 export const getResume = (language) => api.get(`${API_URL}/${language}`);
+
+export const downloadResume = (language) => `${API_URL}/download/${language}`;
