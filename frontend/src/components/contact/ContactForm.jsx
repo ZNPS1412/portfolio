@@ -2,6 +2,7 @@ import Button from "../common/Button";
 import ContactInput from "./ContactInput";
 import ContactTextarea from "./ContactTextarea";
 import { useState } from "react";
+import { sendMessage } from "../../services/contactService";
 
 const initialForm = {
 
@@ -14,6 +15,12 @@ const initialForm = {
 
 function ContactForm() {
 
+    const [loading, setLoading] = useState(false);
+
+    const [success, setSuccess] = useState("");
+
+    const [error, setError] = useState("");
+
     const [formData, setFormData] = useState(initialForm);
 
     const handleChange = (event) => {
@@ -25,10 +32,33 @@ function ContactForm() {
 
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(formData);
+    const handleSubmit = async (event) => {
+
+    event.preventDefault();
+
+        try {
+
+            setLoading(true);
+            setSuccess("");
+            setError("");
+
+            await sendMessage(formData);
+
+            setSuccess("Message sent successfully. I'll get back to you soon.");
+            setFormData(initialForm);
+
+        } catch (error) {
+
+            console.error(error);
+            setError("Failed to send message. Please try again.");
+
+        } finally {
+
+            setLoading(false);
+        }
+
     };
+
 
     return (
 
@@ -80,8 +110,46 @@ function ContactForm() {
                     onChange={handleChange}
                 />
 
-                <Button type="submit" variant="primary">
-                    Send Message →
+                {
+                    success && (
+
+                        <p
+                            className="
+                                text-sm
+                                text-green-400
+                            "
+                        >
+                            {success}
+                        </p>
+
+                    )
+                }
+
+                {
+                    error && (
+
+                        <p
+                            className="
+                                text-sm
+                                text-red-400
+                            "
+                        >
+                            {error}
+                        </p>
+
+                    )
+                }
+                
+                <Button
+                    type="submit"
+                    variant="primary"
+                    disabled={loading}
+                >
+                    {
+                        loading
+                            ? "Sending..."
+                            : "Send Message →"
+                    }
                 </Button>
 
             </form>

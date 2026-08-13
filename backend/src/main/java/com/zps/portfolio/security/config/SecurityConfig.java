@@ -78,6 +78,14 @@ public class SecurityConfig {
                                 HttpMethod.POST,
                                 "/api/contact/**"
                         ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/contact/**"
+                        ).hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/contact/**"
+                        ).hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
                 )

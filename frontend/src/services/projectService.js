@@ -17,3 +17,9 @@ export const createProject = (project) => api.post(API_URL, project, getAuthHead
 export const deleteProject = (id) => api.delete(`${API_URL}/${id}`, getAuthHeader());
 
 export const updateProject = (id, project) => api.put( `${API_URL}/${id}`, project, getAuthHeader());
+
+export const sendMessage = (message) => api.post(API_URL, message);
+
+export const getMessages = () => api.get(API_URL, getAuthHeader());
+
+export const deleteMessage = (id) => api.delete(`${API_URL}/${id}`, getAuthHeader());
