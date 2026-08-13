@@ -3,6 +3,7 @@ import { getProjects } from "../services/projectService";
 import ProjectForm from "../components/admin/ProjectForm";
 import ProjectTable from "../components/admin/ProjectTable";
 import ResumeManager from "../components/admin/ResumeManager";
+import ContactMessages from "../components/admin/ContactMessages";
 
 function Admin() {
 
@@ -72,6 +73,8 @@ function Admin() {
                 />
 
                 <ResumeManager />
+
+                <ContactMessages />
 
             </div>
 

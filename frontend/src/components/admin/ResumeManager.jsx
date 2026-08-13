@@ -186,7 +186,7 @@ function ResumeManager() {
                             )
                         }
                         className="
-                            ml-4
+                            mt-4
                             rounded-lg
                             bg-cyan-500
                             px-4
@@ -287,7 +287,7 @@ function ResumeManager() {
                             )
                         }
                         className="
-                            ml-4
+                            mt-4
                             rounded-lg
                             bg-cyan-500
                             px-4
