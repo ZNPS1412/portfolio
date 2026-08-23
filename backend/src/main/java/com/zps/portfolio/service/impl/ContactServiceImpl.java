@@ -5,6 +5,7 @@ import com.zps.portfolio.dto.response.ContactResponse;
 import com.zps.portfolio.model.ContactMessage;
 import com.zps.portfolio.repository.ContactMessageRepository;
 import com.zps.portfolio.service.ContactService;
+import com.zps.portfolio.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class ContactServiceImpl implements ContactService {
 
     private final ContactMessageRepository contactMessageRepository;
 
+    private final EmailService emailService;
+
     @Override
     public ContactResponse createMessage(ContactRequest request) {
 
@@ -29,6 +32,17 @@ public class ContactServiceImpl implements ContactService {
         message.setMessage(request.getMessage());
 
         ContactMessage saved = contactMessageRepository.save(message);
+
+        try {
+            emailService.sendContactNotification(
+                    saved.getName(),
+                    saved.getEmail(),
+                    saved.getSubject(),
+                    saved.getMessage()
+            );
+        } catch (Exception e) {
+            log.error("Failed to send contact email", e);
+        }
 
         log.info(
                 "New contact message received from {}",
