@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,5 +30,11 @@ public class ProjectRequest {
     private String imageUrl;
 
     private Boolean featured;
+
+    private List<
+            @NotBlank(message = "Highlight cannot be blank.")
+            @Size(max = 300, message = "Highlight cannot exceed 300 characters.")
+                    String
+            > highlights;
 
 }

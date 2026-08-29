@@ -17,6 +17,7 @@ public class ProjectMapper {
         project.setLiveDemoUrl(request.getLiveDemoUrl());
         project.setImageUrl(request.getImageUrl());
         project.setFeatured(request.getFeatured());
+        project.setHighlights(request.getHighlights());
 
         return project;
     }
@@ -33,6 +34,7 @@ public class ProjectMapper {
         response.setLiveDemoUrl(project.getLiveDemoUrl());
         response.setImageUrl("http://localhost:8080/uploads/" + project.getImageUrl());
         response.setFeatured(project.getFeatured());
+        response.setHighlights(project.getHighlights());
 
         return response;
     }

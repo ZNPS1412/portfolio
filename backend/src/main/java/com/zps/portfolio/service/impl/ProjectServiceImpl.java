@@ -99,6 +99,7 @@ public class ProjectServiceImpl implements ProjectService {
         project.setTechnologies(request.getTechnologies());
         project.setGithubUrl(request.getGithubUrl());
         project.setLiveDemoUrl(request.getLiveDemoUrl());
+        project.setHighlights(request.getHighlights());
 
         if (project.getImageUrl() != null && !project.getImageUrl().equals(request.getImageUrl())) {
             fileStorageService.deleteFile(project.getImageUrl());

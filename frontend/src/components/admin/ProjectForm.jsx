@@ -12,6 +12,7 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
         liveDemoUrl: "",
         imageUrl: "",
         featured: false,
+        highlights: [""],
     };
 
     const [formData, setFormData] = useState(INITIAL_FORM_STATE);
@@ -27,6 +28,60 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
     const [selectedImage, setSelectedImage] = useState(null);
 
     const [imagePreview, setImagePreview] = useState("");
+
+    const handleHighlightChange = (index, value) => {
+
+        setFormData((previous) => {
+
+            const updatedHighlights = [
+                ...previous.highlights
+            ];
+
+            updatedHighlights[index] = value;
+
+            return {
+                ...previous,
+                highlights: updatedHighlights,
+            };
+
+        });
+
+    };
+
+    const addHighlight = () => {
+
+        setFormData((previous) => ({
+            ...previous,
+            highlights: [
+                ...previous.highlights,
+                "",
+            ],
+        }));
+
+    };
+
+    const removeHighlight = (index) => {
+
+        setFormData((previous) => {
+
+            if (previous.highlights.length === 1) {
+                return {
+                    ...previous,
+                    highlights: [""],
+                };
+            }
+
+            return {
+                ...previous,
+                highlights: previous.highlights.filter(
+                    (_, currentIndex) =>
+                        currentIndex !== index
+                ),
+            };
+
+        });
+
+    };
 
     const handleChange = (e) => {
 
@@ -70,7 +125,10 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
             const payload = {
                 ...formData,
-                imageUrl
+                imageUrl,
+                highlights: formData.highlights
+                    .map((highlight) => highlight.trim())
+                    .filter((highlight) => highlight !== ""),
             };
 
             if (editingProject) {
@@ -130,6 +188,11 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
             imageUrl: editingProject.imageUrl?.replace("http://localhost:8080/uploads/", "") || "",
 
             featured: editingProject.featured || false,
+
+            highlights:
+                editingProject.highlights?.length > 0
+                    ? editingProject.highlights
+                    : [""],
 
         });
 
@@ -231,6 +294,95 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                     placeholder="Live Demo URL"
                     className="rounded-lg bg-slate-900 p-3"
                 />
+
+                <div>
+
+                    <div className="mb-3 flex items-center justify-between">
+
+                        <label className="font-semibold text-white">
+                            Highlights
+                        </label>
+
+                        <button
+                            type="button"
+                            onClick={addHighlight}
+                            className="
+                                rounded-lg
+                                border
+                                border-cyan-400/30
+                                px-3
+                                py-1
+                                text-sm
+                                text-cyan-400
+                                transition
+                                hover:bg-cyan-400/10
+                            "
+                        >
+                            + Add Highlight
+                        </button>
+
+                    </div>
+
+                    <div className="space-y-3">
+
+                        {formData.highlights.map(
+                            (highlight, index) => (
+
+                                <div
+                                    key={index}
+                                    className="flex gap-2"
+                                >
+
+                                    <input
+                                        type="text"
+                                        value={highlight}
+                                        onChange={(event) =>
+                                            handleHighlightChange(
+                                                index,
+                                                event.target.value
+                                            )
+                                        }
+                                        placeholder={`Highlight ${index + 1}`}
+                                        className="
+                                            min-w-0
+                                            flex-1
+                                            rounded-lg
+                                            border
+                                            border-white/10
+                                            bg-slate-900
+                                            px-4
+                                            py-3
+                                            text-white
+                                            outline-none
+                                            focus:border-cyan-400
+                                        "
+                                    />
+
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            removeHighlight(index)
+                                        }
+                                        className="
+                                            rounded-lg
+                                            bg-red-500
+                                            px-4
+                                            text-sm
+                                            font-semibold
+                                            text-white
+                                        "
+                                    >
+                                        Remove
+                                    </button>
+
+                                </div>
+
+                            )
+                        )}
+
+                    </div>
+
+                </div>
 
                 <div>
 
