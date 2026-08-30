@@ -2,14 +2,48 @@ import Section from "../common/Section";
 import SectionTitle from "../common/SectionTitle";
 import FeaturedProject from "./FeaturedProject";
 import ProjectsGrid from "./ProjectsGrid";
-import { projects } from "../../data/projects";
 import Reveal from "../common/Reveal";
-
-const featuredProject = projects.find((project) => project.featured);
-
-const otherProjects = projects.filter((project) => !project.featured);
+import { useEffect, useState } from "react";
+import { getProjects } from "../../services/projectService";
 
 function Projects() {
+
+    const [projects, setProjects] = useState([]);
+
+    const loadProjects = async () => {
+
+        try {
+
+            const response = await getProjects();
+
+            setProjects(
+                response.data.data.items
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Failed to load projects:",
+                error
+            );
+
+        }
+
+    };
+
+    useEffect(() => {
+
+        loadProjects();
+
+    }, []);
+
+    const featuredProject = projects.find(
+        (project) => project.featured
+    );
+
+    const otherProjects = projects.filter(
+        (project) => !project.featured
+    );
 
     return (
 
@@ -20,16 +54,20 @@ function Projects() {
         >
 
             <Reveal>
-            <SectionTitle
-                eyebrow="FEATURED WORK"
-                title="Projects"
-                subtitle="A collection of projects demonstrating my experience in backend development, full-stack applications and modern software engineering."
-            />
+                <SectionTitle
+                    eyebrow="FEATURED WORK"
+                    title="Projects"
+                    subtitle="A collection of projects demonstrating my experience in backend development, full-stack applications and modern software engineering."
+                />
             </Reveal>
 
-            <FeaturedProject
-                project={featuredProject}
-            />
+            {featuredProject && (
+
+                <FeaturedProject
+                    project={featuredProject}
+                />
+
+            )}
 
             <ProjectsGrid
                 projects={otherProjects}

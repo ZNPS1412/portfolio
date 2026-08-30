@@ -31,6 +31,8 @@ public class Project {
 
     private String liveDemoUrl;
 
+    private String apiDocsUrl;
+
     private String imageUrl;
 
     private Boolean featured;

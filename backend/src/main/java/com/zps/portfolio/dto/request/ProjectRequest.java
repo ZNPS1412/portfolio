@@ -27,6 +27,8 @@ public class ProjectRequest {
 
     private String liveDemoUrl;
 
+    private String apiDocsUrl;
+
     private String imageUrl;
 
     private Boolean featured;

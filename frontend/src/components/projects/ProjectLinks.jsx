@@ -13,11 +13,11 @@ function ProjectLinks({ project }) {
         <div className="mt-8 flex flex-wrap gap-4">
 
             <Reveal>
-            {project.github && (
+            {project.githubUrl && (
                 <a
-                    href={project.github}
+                    href={project.githubUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 rounded-xl border border-slate-700 px-4 py-2 text-slate-300 transition hover:border-cyan-400 hover:text-cyan-300"
                 >
                     <FaGithub />
@@ -28,11 +28,11 @@ function ProjectLinks({ project }) {
             </Reveal>
 
             <Reveal>
-            {project.liveDemo && (
+            {project.liveDemoUrl && (
                 <a
-                    href={project.liveDemo}
+                    href={project.liveDemoUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 rounded-xl bg-cyan-500 px-4 py-2 font-medium text-slate-950 transition hover:bg-cyan-400"
                 >
                     <FaArrowUpRightFromSquare />
@@ -43,11 +43,11 @@ function ProjectLinks({ project }) {
             </Reveal>
 
             <Reveal>
-            {project.apiDocs && (
+            {project.apiDocsUrl && (
                 <a
-                    href={project.apiDocs}
+                    href={project.apiDocsUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 rounded-xl border border-slate-700 px-4 py-2 text-slate-300 transition hover:border-cyan-400 hover:text-cyan-300"
                 >
                     <FaBookOpen />

@@ -14,7 +14,7 @@ function ProjectCard({ project }) {
             <ProjectWindow>
 
                 <img
-                    src={project.image}
+                    src={project.imageUrl}
                     alt={project.title}
                     className="
                         h-50

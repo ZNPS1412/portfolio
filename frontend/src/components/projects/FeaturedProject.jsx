@@ -70,32 +70,38 @@ function FeaturedProject({ project }) {
                     </p>
                     </Reveal>
 
-                    <div className="mt-8 space-y-4">
+                    {project.highlights?.length > 0 && (
 
-                        {project.highlights.map((highlight) => (
-                            <Reveal key={highlight}>
-                            <div
-                                key={highlight}
-                                className="
-                                    flex
-                                    items-center
-                                    gap-3
-                                    text-slate-300
-                                "
-                            >
+                        <div className="mt-8 space-y-4">
 
-                                <FaCircleCheck
-                                    className="text-cyan-400"
-                                />
+                            {project.highlights.map((highlight, index) => (
 
-                                {highlight}
+                                <Reveal key={`${highlight}-${index}`}>
 
-                            </div>
-                            </Reveal>
+                                    <div
+                                        className="
+                                            flex
+                                            items-center
+                                            gap-3
+                                            text-slate-300
+                                        "
+                                    >
 
-                        ))}
+                                        <FaCircleCheck
+                                            className="text-cyan-400"
+                                        />
 
-                    </div>
+                                        {highlight}
+
+                                    </div>
+
+                                </Reveal>
+
+                            ))}
+
+                        </div>
+
+                    )}
 
                     <ProjectBadges
                         technologies={project.technologies}
