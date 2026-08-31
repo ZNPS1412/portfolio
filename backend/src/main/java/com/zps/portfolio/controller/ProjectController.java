@@ -7,6 +7,7 @@ import com.zps.portfolio.payload.ApiResponse;
 import com.zps.portfolio.payload.PaginationResponse;
 import com.zps.portfolio.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/projects")
 @Tag(
         name = "Projects",
-        description = "Operations related to portfolio projects."
+        description = "Public project retrieval and ADMIN project management operations."
 )
 public class ProjectController {
 
@@ -90,6 +91,10 @@ public class ProjectController {
 
     }
 
+    @Operation(
+            summary = "Retrieve a project by ID",
+            description = "Returns the details of a single portfolio project."
+    )
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<ProjectResponse>> getProjectById(@PathVariable Long id) {
         ApiResponse<ProjectResponse> response =
@@ -103,8 +108,10 @@ public class ProjectController {
     }
 
     @Operation(
-            summary = "Create a new project"
+            summary = "Create a new project",
+            description = "Creates a new portfolio project. Requires ADMIN authentication."
     )
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping
     public ResponseEntity<ApiResponse<ProjectResponse>> createProject(
             @Valid @RequestBody ProjectRequest request) {
@@ -125,8 +132,10 @@ public class ProjectController {
     }
 
     @Operation(
-            summary = "Update an existing project"
+            summary = "Update an existing project",
+            description = "Updates an existing portfolio project. Requires ADMIN authentication."
     )
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping("/{id}")
     public ProjectResponse updateProject(
             @PathVariable Long id,
@@ -136,8 +145,10 @@ public class ProjectController {
     }
 
     @Operation(
-            summary = "Delete a project"
+            summary = "Delete a project",
+            description = "Deletes a portfolio project and its associated image file. Requires ADMIN authentication."
     )
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(
             @PathVariable Long id) {
