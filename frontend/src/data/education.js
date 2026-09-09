@@ -129,4 +129,12 @@ export const currentTechnologies = [
         color: "#38BDF8",
     },
 
+    {
+        id: 7,
+        name: "Supabase",
+        category: "Backend-as-a-Service",
+        icon: "supabase",
+        color: "#3ECF8E",
+    },
+
 ];

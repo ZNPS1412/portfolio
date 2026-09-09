@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { getProjects } from "../services/projectService";
+import { logout } from "../services/authService";
 import ProjectForm from "../components/admin/ProjectForm";
 import ProjectTable from "../components/admin/ProjectTable";
 import ResumeManager from "../components/admin/ResumeManager";
 import ContactMessages from "../components/admin/ContactMessages";
+import AccountSettings from "../components/admin/AccountSettings";
 
 function Admin() {
 
@@ -33,6 +35,14 @@ function Admin() {
 
     }, []);
 
+    const handleLogout = () => {
+
+        logout();
+
+        window.location.href = "/login";
+
+    };
+
     return (
 
         <main
@@ -47,18 +57,48 @@ function Admin() {
 
             <div className="mx-auto max-w-4xl">
 
-                <h1
+                <div
                     className="
-                        text-4xl
-                        font-bold
+                        mb-8
+                        flex
+                        flex-col
+                        gap-4
+                        sm:flex-row
+                        sm:items-center
+                        sm:justify-between
                     "
                 >
-                    Project Admin
-                </h1>
 
-                <p className="mt-5 mb-8 text-slate-400">
-                    Manage portfolio projects.
-                </p>
+                    <div>
+
+                        <h1 className="text-4xl font-bold">
+                            Project Admin
+                        </h1>
+
+                        <p className="mt-2 text-slate-400">
+                            Manage portfolio projects.
+                        </p>
+
+                    </div>
+
+                    <button
+                        onClick={handleLogout}
+                        className="
+                            rounded-xl
+                            border
+                            border-red-400/30
+                            px-5
+                            py-3
+                            font-medium
+                            text-red-400
+                            transition
+                            hover:bg-red-400/10
+                        "
+                    >
+                        Logout
+                    </button>
+
+                </div>
 
                 <ProjectForm
                     editingProject={editingProject}
@@ -75,6 +115,8 @@ function Admin() {
                 <ResumeManager />
 
                 <ContactMessages />
+
+                <AccountSettings />
 
             </div>
 

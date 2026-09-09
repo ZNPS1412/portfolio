@@ -4,6 +4,7 @@ function Button({
     href,
     variant = "primary",
     className = "",
+    disabled = false
 }) {
 
     const variants = {
@@ -43,6 +44,9 @@ function Button({
         transition-all
         duration-300
         hover:-translate-y-0.5
+        disabled:cursor-not-allowed
+        disabled:opacity-60
+        disabled:hover:translate-y-0
         ${variants[variant]}
         ${className}
     `;
@@ -66,7 +70,11 @@ function Button({
 
     return (
 
-        <button type={type} className={styles}>
+        <button
+            type={type}
+            className={styles}
+            disabled={disabled}
+        >
             {children}
         </button>
 

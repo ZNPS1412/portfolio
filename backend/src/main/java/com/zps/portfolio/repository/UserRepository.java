@@ -11,6 +11,8 @@ public interface UserRepository
 
     Optional<AppUser> findByUsername(String username);
 
+    boolean existsByUsername(String username);
+
     boolean existsByUserRole(UserRole role);
 
 }

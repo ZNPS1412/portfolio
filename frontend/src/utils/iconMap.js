@@ -28,6 +28,7 @@ import {
     SiIntellijidea,
     SiHibernate,
     SiGodotengine,
+    SiSupabase,
 } from "react-icons/si";
 
 
@@ -58,5 +59,6 @@ export const iconMap = {
     githubicon: FaGithub,
     linkedin: FaLinkedin,
     location: FaLocationDot,
+    supabase: SiSupabase,
 };
 

@@ -56,4 +56,17 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(AccountUpdateException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAccountUpdateException(
+            AccountUpdateException ex) {
+
+        return ResponseEntity.badRequest().body(
+                new ApiResponse<>(
+                        false,
+                        ex.getMessage(),
+                        null
+                )
+        );
+    }
+
 }

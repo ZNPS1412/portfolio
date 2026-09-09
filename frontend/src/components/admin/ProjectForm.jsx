@@ -10,6 +10,7 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
         technologies: "",
         githubUrl: "",
         liveDemoUrl: "",
+        apiDocsUrl: "",
         imageUrl: "",
         featured: false,
         highlights: [""],
@@ -185,6 +186,8 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
             liveDemoUrl: editingProject.liveDemoUrl || "",
 
+            apiDocsUrl: editingProject.apiDocsUrl || "",
+
             imageUrl: editingProject.imageUrl?.replace("http://localhost:8080/uploads/", "") || "",
 
             featured: editingProject.featured || false,
@@ -292,6 +295,14 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                     value={formData.liveDemoUrl}
                     onChange={handleChange}
                     placeholder="Live Demo URL"
+                    className="rounded-lg bg-slate-900 p-3"
+                />
+
+                <input
+                    name="apiDocsUrl"
+                    value={formData.apiDocsUrl}
+                    onChange={handleChange}
+                    placeholder="API Docs URL"
                     className="rounded-lg bg-slate-900 p-3"
                 />
 
