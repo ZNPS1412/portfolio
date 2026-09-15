@@ -25,10 +25,16 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final FileStorageService fileStorageService;
+    private final ProjectMapper projectMapper;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, FileStorageService fileStorageService) {
+    public ProjectServiceImpl(
+            ProjectRepository projectRepository,
+            FileStorageService fileStorageService,
+            ProjectMapper projectMapper
+    ) {
         this.projectRepository = projectRepository;
         this.fileStorageService = fileStorageService;
+        this.projectMapper = projectMapper;
     }
 
     @Override
@@ -56,7 +62,7 @@ public class ProjectServiceImpl implements ProjectService {
         Page<Project> projects =
                 projectRepository.findAll(specification, pageable);
 
-        return projects.map(ProjectMapper::toResponse);
+        return projects.map(projectMapper::toResponse);
     }
 
     @Override
@@ -67,7 +73,7 @@ public class ProjectServiceImpl implements ProjectService {
                         new ResourceNotFoundException(
                                 "Project not found with id: " + id));
 
-        return ProjectMapper.toResponse(project);
+        return projectMapper.toResponse(project);
     }
 
     @Override
@@ -75,13 +81,13 @@ public class ProjectServiceImpl implements ProjectService {
 
         log.info("Creating project: {}", request.getTitle());
 
-        Project project = ProjectMapper.toEntity(request);
+        Project project = projectMapper.toEntity(request);
 
         Project savedProject = projectRepository.save(project);
 
         log.info("Project created successfully with ID: {}", savedProject.getId());
 
-        return ProjectMapper.toResponse(savedProject);
+        return projectMapper.toResponse(savedProject);
     }
 
     @Override
@@ -113,7 +119,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         log.info("Project updated successfully.");
 
-        return ProjectMapper.toResponse(updated);
+        return projectMapper.toResponse(updated);
     }
 
     @Override

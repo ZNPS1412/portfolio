@@ -3,10 +3,21 @@ package com.zps.portfolio.mapper;
 import com.zps.portfolio.dto.request.ProjectRequest;
 import com.zps.portfolio.dto.response.ProjectResponse;
 import com.zps.portfolio.model.Project;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProjectMapper {
 
-    public static Project toEntity(ProjectRequest request) {
+    private final String appBaseUrl;
+
+    public ProjectMapper(
+            @Value("${APP_BASE_URL}") String appBaseUrl
+    ) {
+        this.appBaseUrl = appBaseUrl;
+    }
+
+    public Project toEntity(ProjectRequest request) {
 
         Project project = new Project();
 
@@ -23,7 +34,7 @@ public class ProjectMapper {
         return project;
     }
 
-    public static ProjectResponse toResponse(Project project) {
+    public ProjectResponse toResponse(Project project) {
 
         ProjectResponse response = new ProjectResponse();
 
@@ -34,7 +45,11 @@ public class ProjectMapper {
         response.setGithubUrl(project.getGithubUrl());
         response.setLiveDemoUrl(project.getLiveDemoUrl());
         response.setApiDocsUrl(project.getApiDocsUrl());
-        response.setImageUrl("http://localhost:8080/uploads/" + project.getImageUrl());
+
+        response.setImageUrl(
+                appBaseUrl + "/uploads/" + project.getImageUrl()
+        );
+
         response.setFeatured(project.getFeatured());
         response.setHighlights(project.getHighlights());
 

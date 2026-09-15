@@ -126,7 +126,7 @@ function AccountSettings() {
 
         <section className="mb-10">
 
-            <h2 className="mb-6 text-2xl font-bold">
+            <h2 className="mt-6 mb-6 text-2xl font-bold">
                 Account Settings
             </h2>
 

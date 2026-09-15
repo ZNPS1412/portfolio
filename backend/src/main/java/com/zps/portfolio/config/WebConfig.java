@@ -12,14 +12,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    @Value("${APP_CORS_ALLOWED_ORIGINS}")
+    private String[] allowedOrigins;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/api/**")
-                .allowedOrigins(
-                        "http://localhost:5173",
-                        "https://your-portfolio.netlify.app"
-                )
+                .allowedOrigins(allowedOrigins)
                 .allowedMethods(
                         "GET",
                         "POST",

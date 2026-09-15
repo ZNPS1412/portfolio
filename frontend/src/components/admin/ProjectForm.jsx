@@ -188,7 +188,7 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
             apiDocsUrl: editingProject.apiDocsUrl || "",
 
-            imageUrl: editingProject.imageUrl?.replace("http://localhost:8080/uploads/", "") || "",
+            imageUrl: editingProject.imageUrl?.replace(`${import.meta.env.VITE_API_URL}/uploads/`, "") || "",
 
             featured: editingProject.featured || false,
 
@@ -479,7 +479,7 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                                     src={
                                         imagePreview
                                             ? imagePreview
-                                            : `http://localhost:8080/uploads/${formData.imageUrl}`
+                                            : `${import.meta.env.VITE_API_URL}/uploads/${formData.imageUrl}`
                                     }
                                     alt="Project Preview"
                                     className="
