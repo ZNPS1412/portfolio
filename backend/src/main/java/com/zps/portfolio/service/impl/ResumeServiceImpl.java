@@ -6,18 +6,12 @@ import com.zps.portfolio.repository.ResumeRepository;
 import com.zps.portfolio.service.FileStorageService;
 import com.zps.portfolio.service.ResumeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +21,6 @@ public class ResumeServiceImpl implements ResumeService {
 
     private final FileStorageService fileStorageService;
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
-
     @Override
     public ResumeResponse uploadResume(String language, MultipartFile file) {
 
@@ -38,7 +29,7 @@ public class ResumeServiceImpl implements ResumeService {
                                     .orElse(null);
 
         if (existingResume != null) {
-            fileStorageService.deleteFile(existingResume.getFileName());
+            fileStorageService.deleteResume(existingResume.getFileName());
             resumeRepository.delete(existingResume);
         }
 
@@ -85,26 +76,17 @@ public class ResumeServiceImpl implements ResumeService {
                             .findByLanguage(language.toUpperCase())
                             .orElseThrow(() -> new RuntimeException("Resume not found."));
 
-        try {
+        Resource resource = fileStorageService.downloadResume(resume.getFileName());
 
-            Path filePath = Paths.get(uploadDir).resolve(resume.getFileName());
-
-            Resource resource = new UrlResource(filePath.toUri());
-
-            return ResponseEntity.ok()
-                        .contentType(MediaType.APPLICATION_PDF)
-                        .header(
-                                HttpHeaders.CONTENT_DISPOSITION,
-                                "attachment; filename=\"" +
-                                        resume.getOriginalFileName() +
-                                        "\""
-                        )
-                        .body(resource);
-
-        } catch (MalformedURLException e) {
-
-            throw new RuntimeException("File not found.");
-        }
+        return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(
+                            HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"" +
+                                    resume.getOriginalFileName() +
+                                    "\""
+                    )
+                    .body(resource);
 
     }
 

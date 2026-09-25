@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProjectMapper {
 
-    private final String appBaseUrl;
+    private final String supabaseUrl;
 
-    public ProjectMapper(
-            @Value("${APP_BASE_URL}") String appBaseUrl
-    ) {
-        this.appBaseUrl = appBaseUrl;
+    public ProjectMapper(@Value("${SUPABASE_URL}") String supabaseUrl) {
+        this.supabaseUrl = supabaseUrl;
     }
 
     public Project toEntity(ProjectRequest request) {
@@ -47,7 +45,9 @@ public class ProjectMapper {
         response.setApiDocsUrl(project.getApiDocsUrl());
 
         response.setImageUrl(
-                appBaseUrl + "/uploads/" + project.getImageUrl()
+                supabaseUrl
+                        + "/storage/v1/object/public/project-images/"
+                        + project.getImageUrl()
         );
 
         response.setFeatured(project.getFeatured());

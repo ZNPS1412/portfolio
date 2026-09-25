@@ -9,6 +9,7 @@ dist-ssr/
 .env
 .env.*
 .env.local
+.env.docker
 .env.*.local
 !.env.example
 

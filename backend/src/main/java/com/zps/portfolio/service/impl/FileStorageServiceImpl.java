@@ -2,24 +2,30 @@ package com.zps.portfolio.service.impl;
 
 import com.zps.portfolio.exception.FileStorageException;
 import com.zps.portfolio.service.FileStorageService;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.UUID;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+    private static final String IMAGE_BUCKET = "project-images";
+    private static final String RESUME_BUCKET = "resumes";
+
+    private final RestClient supabaseStorageClient;
+
+    public FileStorageServiceImpl(RestClient supabaseStorageClient) {
+        this.supabaseStorageClient = supabaseStorageClient;
+    }
 
     @Override
     public String uploadImage(MultipartFile file) {
@@ -44,15 +50,17 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new FileStorageException("Image size cannot exceed 5 MB.");
         }
 
-        return saveFile(file);
-
+        return uploadToSupabase(
+                file,
+                IMAGE_BUCKET,
+                contentType
+        );
     }
 
     @Override
     public String uploadResume(MultipartFile file) {
 
         if (file.isEmpty()) {
-
             throw new FileStorageException("Please select a PDF.");
         }
 
@@ -63,61 +71,124 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new FileStorageException("Only PDF files are allowed.");
         }
 
-        return saveFile(file);
-
+        return uploadToSupabase(
+                file,
+                RESUME_BUCKET,
+                contentType
+        );
     }
 
-    private String saveFile(MultipartFile file) {
+    private String uploadToSupabase(
+            MultipartFile file,
+            String bucket,
+            String contentType
+    ) {
 
         try {
 
-            Path uploadPath = Paths.get(uploadDir);
-
-            if (!Files.exists(uploadPath)) {
-
-                Files.createDirectories(uploadPath);
-
-            }
-
             String originalFilename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
-            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String extension = "";
+
+            int lastDot = originalFilename.lastIndexOf(".");
+
+            if (lastDot >= 0) {
+                extension = originalFilename.substring(lastDot);
+            }
 
             String fileName = UUID.randomUUID() + extension;
 
-            Files.copy(
-                    file.getInputStream(),
-                    uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING
-            );
+            byte[] fileBytes = file.getBytes();
+
+            supabaseStorageClient
+                    .post()
+                    .uri("/object/{bucket}/{filename}",
+                            bucket,
+                            fileName)
+                    .header("x-upsert", "true")
+                    .contentType(
+                            MediaType.parseMediaType(contentType)
+                    )
+                    .body(fileBytes)
+                    .retrieve()
+                    .toBodilessEntity();
 
             return fileName;
 
         } catch (IOException e) {
 
-            throw new FileStorageException("Failed to upload file.");
-        }
+            throw new FileStorageException("Failed to read file.");
 
+        } catch (RestClientResponseException e) {
+
+            throw new FileStorageException("Failed to upload file to Supabase Storage.");
+        }
     }
 
     @Override
-    public void deleteFile(String filename) {
+    public void deleteImage(String filename) {
+
+        deleteFromSupabase(IMAGE_BUCKET, filename);
+    }
+
+    @Override
+    public void deleteResume(String filename) {
+
+        deleteFromSupabase(RESUME_BUCKET, filename);
+    }
+
+    private void deleteFromSupabase(String bucket, String filename
+    ) {
+
+        if (filename == null || filename.isBlank()) {
+            return;
+        }
 
         try {
 
-            if (filename == null || filename.isBlank()) {
-                return;
-            }
+            supabaseStorageClient
+                    .delete()
+                    .uri("/object/{bucket}/{filename}",
+                            bucket,
+                            filename)
+                    .retrieve()
+                    .toBodilessEntity();
 
-            Path filePath = Paths.get(uploadDir).resolve(filename);
+        } catch (RestClientResponseException e) {
 
-            Files.deleteIfExists(filePath);
-
-        } catch (IOException e) {
-
-            throw new FileStorageException("Failed to delete file.");
+            throw new FileStorageException("Failed to delete file from Supabase Storage.");
         }
-
     }
 
+    @Override
+    public Resource downloadResume(String filename) {
+
+        if (filename == null || filename.isBlank()) {
+            throw new FileStorageException("Resume filename is required.");
+        }
+
+        try {
+
+            byte[] fileBytes =
+                    supabaseStorageClient
+                            .get()
+                            .uri(
+                                    "/object/{bucket}/{filename}",
+                                    RESUME_BUCKET,
+                                    filename
+                            )
+                            .retrieve()
+                            .body(byte[].class);
+
+            if (fileBytes == null) {
+                throw new FileStorageException("Resume file was not found.");
+            }
+
+            return new ByteArrayResource(fileBytes);
+
+        } catch (RestClientResponseException e) {
+
+            throw new FileStorageException("Failed to download resume from Supabase Storage.");
+        }
+    }
 }

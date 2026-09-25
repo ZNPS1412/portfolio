@@ -2,8 +2,7 @@ import api from "./api";
 
 const getAuthHeader = () => ({
     headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "multipart/form-data"
+        Authorization: `Bearer ${localStorage.getItem("token")}`
     }
 });
 

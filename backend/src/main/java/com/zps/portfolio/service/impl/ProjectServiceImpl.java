@@ -109,7 +109,7 @@ public class ProjectServiceImpl implements ProjectService {
         project.setHighlights(request.getHighlights());
 
         if (project.getImageUrl() != null && !project.getImageUrl().equals(request.getImageUrl())) {
-            fileStorageService.deleteFile(project.getImageUrl());
+            fileStorageService.deleteImage(project.getImageUrl());
         }
         project.setImageUrl(request.getImageUrl());
 
@@ -133,7 +133,7 @@ public class ProjectServiceImpl implements ProjectService {
                                 "Project not found with id: " + id));
 
         if (project.getImageUrl() != null && !project.getImageUrl().isBlank()) {
-            fileStorageService.deleteFile(project.getImageUrl());
+            fileStorageService.deleteImage(project.getImageUrl());
         }
 
         projectRepository.delete(project);

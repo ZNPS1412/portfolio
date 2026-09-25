@@ -26,6 +26,7 @@ frontend/.vite/
 # Environment
 .env
 .env.local
+.env.docker
 .env.*.local
 backend/.env
 backend/.env.local

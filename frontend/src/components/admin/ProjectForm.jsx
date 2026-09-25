@@ -188,7 +188,10 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
 
             apiDocsUrl: editingProject.apiDocsUrl || "",
 
-            imageUrl: editingProject.imageUrl?.replace(`${import.meta.env.VITE_API_URL}/uploads/`, "") || "",
+            imageUrl:
+                editingProject.imageUrl
+                    ? editingProject.imageUrl.split("/").pop()
+                    : "",
 
             featured: editingProject.featured || false,
 
@@ -198,6 +201,8 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                     : [""],
 
         });
+
+        setImagePreview(editingProject.imageUrl || "");
 
     }, [editingProject]);
 
@@ -475,12 +480,7 @@ function ProjectForm({ editingProject, setEditingProject, onProjectCreated }) {
                                 "
                             >
 
-                                <img
-                                    src={
-                                        imagePreview
-                                            ? imagePreview
-                                            : `${import.meta.env.VITE_API_URL}/uploads/${formData.imageUrl}`
-                                    }
+                                <img src={imagePreview}
                                     alt="Project Preview"
                                     className="
                                         h-48

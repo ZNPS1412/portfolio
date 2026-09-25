@@ -39,6 +39,7 @@ build/
 ### Environment ###
 .env
 .env.local
+.env.docker
 .env.*.local
 
 
